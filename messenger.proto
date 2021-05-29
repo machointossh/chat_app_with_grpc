@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+option go_package = ".;messenger";
+// option go_package = "<DIRECTORY>;<PACKAGE_NAME>";
+
+package messsenger;
+
+service Messenger {
+    rpc FetchMessage (google.protobuf.Empty) returns (stream MessageResponse) {}
+    rpc PostMessage (MessageRequest) returns (MessageResponse) {}
+}
+
+message MessageRequest {
+    string message = 1;
+}
+
+message MessageResponse {
+    string message = 1;
+}

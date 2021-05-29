@@ -1,0 +1,9 @@
+version: '3'
+services:
+  proto:
+    command: sh /workdir/protoc/protoc.sh
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ..:/workdir
