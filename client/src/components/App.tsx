@@ -1,22 +1,19 @@
 import React from 'react';
-import Messages, { useMessages } from './Messages';
-import MessageForm, { useMessageForm } from './MessageForm';
+import Messages from './Messages';
+import MessageForm from './MessageForm';
 import { gRPCClients } from '../gRPCclient';
 
 const App: React.FC = () => {
-  const messagesState = useMessages(gRPCClients.messengerClient);
-  const messageFormState = useMessageForm(gRPCClients.messengerClient);
-
   return (
     <div className="container ui">
       <br />
       <h1 className="ui header aligned center">Chat App with gRPC</h1>
       <div className="ui container">
-        <MessageForm {...messageFormState} />
+        <MessageForm messengerClient={gRPCClients.messengerClient} />
       </div>
       <br />
       <div className="ui container">
-        <Messages {...messagesState} />
+        <Messages messengerClient={gRPCClients.messengerClient} />
       </div>
     </div>
   );

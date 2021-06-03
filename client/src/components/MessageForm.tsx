@@ -3,15 +3,12 @@ import { MessageRequest } from '../messenger/messenger_pb';
 import { useState, useCallback, SyntheticEvent } from 'react';
 import { MessengerClient } from '../messenger/MessengerServiceClientPb';
 
-type useMessageFormProps = {
-  message: string;
-  onChange: (event: SyntheticEvent) => void;
-  onSubmit: (event: SyntheticEvent) => void;
+// type Props = ReturnType<typeof useMessageForm>;
+type Props = {
+  messengerClient: MessengerClient;
 };
 
-export const useMessageForm = (
-  client: MessengerClient,
-): useMessageFormProps => {
+const MessageForm: React.FC<Props> = ({ messengerClient }) => {
   const [message, setMessage] = useState<string>('');
 
   // Input Message
@@ -29,31 +26,21 @@ export const useMessageForm = (
       event.preventDefault();
       const req = new MessageRequest();
       req.setMessage(message);
-      client.postMessage(req, null, res => console.log(res));
+      messengerClient.postMessage(req, null, res => console.log(res));
       setMessage('');
     },
-    [client, message],
+    [messengerClient, message],
   );
 
-  return {
-    message,
-    onChange,
-    onSubmit,
-  };
-};
-
-type Props = ReturnType<typeof useMessageForm>;
-
-const MessageForm: React.FC<Props> = ({ message, onChange, onSubmit }) => {
   return (
     <form className="ui form" onSubmit={onSubmit}>
       <div className="ui field">
         <label>{"What's up to you?"}</label>
         <input type="text" value={message} onChange={onChange} />
-        <button className="ui button primary" type="submit">
-          Post
-        </button>
       </div>
+      <button className="ui button primary" type="submit">
+        Post
+      </button>
     </form>
   );
 };
