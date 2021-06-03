@@ -1,0 +1,15 @@
+version: '3'
+services:
+  grpc_backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+  envoy:
+    image: envoyproxy/envoy-dev:747944b30b5556b07a5bffdea46fcea89404b9f4
+    ports:
+      - '10000:10000'
+      - '10001:10001'
+    volumes:
+      - ./envoy/envoy.yml:/etc/envoy/envoy.yaml
+    links:
+      - grpc_backend

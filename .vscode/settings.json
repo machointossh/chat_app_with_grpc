@@ -1,3 +1,26 @@
 {
-  "git.ignoreLimitWarning": true
+  // Common
+  "editor.formatOnSave": true,
+  // React.js Client
+  "eslint.workingDirectories": ["./client"],
+  // Go Server
+  "go.inferGopath": false,
+  "go.autocompleteUnimportedPackages": true,
+  "go.installDependenciesWhenBuilding": true,
+  "go.docsTool": "gogetdoc",
+  "go.formatTool": "goimports",
+  "go.toolsEnvVars": { "GO111MODULE": "on" },
+  "go.alternateTools": { "go-langserver": "gopls" },
+  "gopls": { "experimentalWorkspaceModule": true },
+  // Python
+  "python.pipenvPath": "pipenv",
+  "python.analysis.extraPaths": ["./python_grpc_client"],
+  "python.linting.pylintEnabled": false,
+  "python.linting.flake8Enabled": true,
+  "python.formatting.autopep8Args": []
+  // The following section can be replaced with .flake8
+  //
+  // "python.linting.flake8Args": [
+  //   "--exclude python/*_pb2.py,python/*_pb2_grpc.py"
+  // ],
 }

@@ -24,6 +24,7 @@ type Server struct {
 }
 
 func (s *Server) FetchMessage(_ *empty.Empty, stream pb.Messenger_FetchMessageServer) error {
+	log.Println("FetchMessage")
 	for _, r := range s.requests {
 		if err := stream.Send(&pb.MessageResponse{Message: r.GetMessage()}); err != nil {
 			return err
@@ -46,7 +47,7 @@ func (s *Server) FetchMessage(_ *empty.Empty, stream pb.Messenger_FetchMessageSe
 }
 
 func (s *Server) PostMessage(ctx context.Context, r *pb.MessageRequest) (*pb.MessageResponse, error) {
-	// TODO: Implement
+	log.Println("PostMessage")
 	m := r.GetMessage()
 	log.Printf("Received: %s", m)
 	req := &pb.MessageRequest{Message: m + ": " + time.Now().Format("2006-01-02 15:04:05")}
@@ -77,10 +78,12 @@ func main() {
 
 	// Start servers
 	go func() {
+		log.Printf("Starting messenger server.")
 		if err := grpcServer.Serve(messengerLis); err != nil {
 			log.Fatalf("failed to serve: %v", err)
 		}
 	}()
+	log.Printf("Starting healthcheck server.")
 	if err := grpcServer.Serve(healthLis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}
