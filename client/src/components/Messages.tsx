@@ -21,7 +21,7 @@ const Messages: React.FC<Props> = ({ messengerClient }) => {
     stream$.on('data', res => {
       console.log('Getting response.');
       console.log(res);
-      setMessages(state => [...state, res.getMessage()]);
+      setMessages(state => [res.getMessage(), ...state]); // To reverse the order
     });
     stream$.on('status', status => {
       console.log(status.code);
@@ -33,7 +33,7 @@ const Messages: React.FC<Props> = ({ messengerClient }) => {
 
   return (
     <div className="ui relaxed divided list">
-      {messages.reverse().map(m => {
+      {messages.map(m => {
         const [msg, time] = m.split(': ');
 
         return (
