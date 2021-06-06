@@ -6,9 +6,9 @@ services:
     image: envoyproxy/envoy-dev:747944b30b5556b07a5bffdea46fcea89404b9f4
     ports:
       - '10000:10000' # gRPC
-      - '10001:10001' # Health check
+      - '10001:10001' # Amdin
     volumes:
-      - ./envoy/envoy.yml:/etc/envoy/envoy.yaml
+      - ./envoy/envoy.yaml:/etc/envoy/envoy.yaml
     links:
       - grpc_backend
   client:
