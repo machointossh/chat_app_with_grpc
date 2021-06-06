@@ -1,6 +1,6 @@
 version: '3'
 services:
-  grpc_backend:
+  server:
     build: ./server
   envoy:
     image: envoyproxy/envoy-dev:747944b30b5556b07a5bffdea46fcea89404b9f4
