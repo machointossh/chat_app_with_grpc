@@ -17,10 +17,9 @@
   "python.analysis.extraPaths": ["./python_grpc_client"],
   "python.linting.pylintEnabled": false,
   "python.linting.flake8Enabled": true,
-  "python.formatting.autopep8Args": []
-  // The following section can be replaced with .flake8
-  //
-  // "python.linting.flake8Args": [
-  //   "--exclude python/*_pb2.py,python/*_pb2_grpc.py"
-  // ],
+  "python.formatting.autopep8Args": [],
+  // K8s
+  "vs-kubernetes": {
+    "disable-linters": ["resource-limits"]
+  }
 }
