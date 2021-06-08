@@ -10,10 +10,8 @@ services:
     volumes:
       - ./envoy/envoy.yaml:/etc/envoy/envoy.yaml
     links:
-      - grpc_backend
+      - server
   client:
     build: ./client
     ports:
       - 80:80
-    depends_on:
-      - envoy
