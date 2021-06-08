@@ -1,0 +1,47 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chat-server
+  namespace: chat-app
+  labels:
+    app: chat-server-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chat-server 
+  template:
+    metadata:
+      labels:
+        app: chat-server
+    spec:
+      volumes:
+        - name: envoy
+          configMap:
+            name: chat-server-envoy
+      containers:
+        - name: envoy
+          image: envoyproxy/envoy-dev:747944b30b5556b07a5bffdea46fcea89404b9f4
+          command:
+            - "/usr/local/bin/envoy"
+          args:
+            - "--config-path /etc/envoy/envoy.yaml"
+          resources:
+            limits:
+              memory: 512Mi
+          ports:
+            - containerPort: 10000
+              name: grpc
+            - containerPort: 10001
+              name: envoy-admin
+          volumeMounts:
+            - name: envoy
+              mountPath: /etc/envoy
+        - name: chat-server
+          image: botamochi818/chat_server:1.0.0
+          ports:
+          - containerPort: 9090
+            name: grpc
+          - containerPort: 9091
+            name: health

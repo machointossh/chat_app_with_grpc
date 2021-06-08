@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lb-service
+  namespace: chat-app
+spec:
+  type: LoadBalancer 
+  selector:
+    app: lb
+  ports:
+  - port: 80 
+    targetPort: 10000
+    name: grpc
+    protocol: TCP
+  - port: 10001
+    targetPort: 10001 
+    protocol: TCP
+    name: admin
