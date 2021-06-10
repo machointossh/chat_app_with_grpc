@@ -16,9 +16,10 @@ if [ "$minikube_host_status" != "Running" ]; then
     # You'll see the kubeadm config error without "--vm=ture"
     minikube start --vm=true
 
-    # minikube start --driver=hyperkit
-    # If "$OSTYPE"* is darwin,
-    # minikube will automatically select hyperkit as a driver.
+    # Instead, you can run the following.
+    # $ minikube start --driver=hyperkit
+    # macOS:   hyperkit
+    # windows: hyperv
 fi
 
 minikube addons enable ingress

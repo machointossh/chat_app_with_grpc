@@ -4,25 +4,18 @@ set -eu
 
 print_info_tag="k8s_apply.sh"
 target_namespace=$1
-existing_namespaces=`kubectl get namespaces | tail -n +2 | awk '{print $1;}'`
-existing_namespaces_arr=($existing_namespaces)
-namespace_already_created=false
 
 function print_info {
     echo "[$print_info_tag] $1"
 }
 
 # Create namespace if not exists
-for ns in "${existing_namespaces_arr[@]}"; do
-    if [ "$ns" == "$target_namespace" ]; then
-        namespace_already_created=true
-        print_info "$ns is already existing"
-        break
-    fi
-done
-if [ "$namespace_already_created" == false ]; then
+grepeed_target_namespace=`kubectl get namespaces | grep $target_namespace | awk '{print $1;}'`
+if [ "$target_namespace" == "$grepeed_target_namespace" ]; then
+    print_info "<$target_namespace> namespace already exists."
+else
     kubectl create namespace $target_namespace
-    print_info "Created <$ns> namespace!!"
+    print_info "Created <$target_namespace> namespace!!"
 fi
 
 # K8s apply
