@@ -12,6 +12,10 @@ services:
     links:
       - server
   client:
-    build: ./client
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+      args:
+        SERVER_HOSTNAME: ${SERVER_HOSTNAME}:80
     ports:
       - 80:80
