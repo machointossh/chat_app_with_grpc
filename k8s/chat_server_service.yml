@@ -1,0 +1,24 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chat-server-service
+  namespace: chat-app
+  labels:
+    app: chat-server-service
+spec:
+  # clusterIP: None
+  type: ClusterIP
+  selector:
+    # This has to match Deployment's spec.template.metadata.labels
+    # Because this specifies the pods' label, not deployment label.
+    app: chat-server
+  ports:
+    - name: grpc
+      port: 10000 
+      targetPort: 10000
+      protocol: TCP
+    - name: admin
+      port: 10001
+      targetPort: 10001
+      protocol: TCP

@@ -1,0 +1,23 @@
+version: '3'
+services:
+  server:
+    build: ./server
+  envoy:
+    image: envoyproxy/envoy-dev:747944b30b5556b07a5bffdea46fcea89404b9f4
+    ports:
+      - '10000:10000' # gRPC
+      - '10001:10001' # Amdin
+    volumes:
+      - ./envoy/envoy.yaml:/etc/envoy/envoy.yaml
+    links:
+      - server
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+      args:
+        SERVER_HOSTNAME: localhost:10000
+    ports:
+      - 8000:80
+    depends_on:
+      - envoy

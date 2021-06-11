@@ -1,0 +1,39 @@
+---
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: lb-deployment
+    namespace: chat-app
+    labels:
+      app: lb-deployment
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: lb
+    template:
+      metadata:
+        labels:
+          app: lb
+      spec:
+        volumes:
+          - name: lb-envoy
+            configMap:
+              name: lb-envoy-config-map
+        containers:
+          - name: envoy
+            image: envoyproxy/envoy-dev:747944b30b5556b07a5bffdea46fcea89404b9f4
+            command:
+              - "/usr/local/bin/envoy"
+            args:
+              - "--config-path /etc/envoy/envoy.yaml"
+            resources:
+              limits:
+                memory: 512Mi
+            ports:
+              - containerPort: 10000
+                name: grpc
+            volumeMounts:
+              - name: lb-envoy
+                mountPath: /etc/envoy
+  
