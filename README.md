@@ -17,6 +17,28 @@ I hope this project will help you to understand how they work.
 
 ![arch.png](./docs/image/arch.png)
 
+## Directory Arch
+
+```text
+$ tree -L 1
+chat_app_with_grpc
+├── Makefile                  # Useful commands packaged
+├── README.md                 # Project Documents
+├── client                    # gRPC-Web Client App: React.js x TypeScript
+├── docker-compose.local.yml  # For local deploy
+├── docker-compose.yml        # Used with minikube deploy
+├── docs                      # Attachment files of README.md
+├── envoy                     # Used for docker-compose.local.yml
+├── k8s                       # K8s manifests
+├── proto                     # .proto files
+├── protoc                    # To compile protocol buffers in docker
+├── python_grpc_client        # Not necessary. You can use instead of grpcurl
+├── scripts                   # Useful commands packaged
+└── server                    # gRPC Chat Server: Golang
+
+9 directories, 4 files
+```
+
 ## How to Start?
 
 You can run the client app and the chat server on your local machine.
