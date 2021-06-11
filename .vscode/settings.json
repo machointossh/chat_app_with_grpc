@@ -1,9 +1,6 @@
 {
-  // Common
   "editor.formatOnSave": true,
-  // React.js Client
   "eslint.workingDirectories": ["./client"],
-  // Go Server
   "go.inferGopath": false,
   "go.autocompleteUnimportedPackages": true,
   "go.installDependenciesWhenBuilding": true,
@@ -12,14 +9,46 @@
   "go.toolsEnvVars": { "GO111MODULE": "on" },
   "go.alternateTools": { "go-langserver": "gopls" },
   "gopls": { "experimentalWorkspaceModule": true },
-  // Python
   "python.pipenvPath": "pipenv",
   "python.analysis.extraPaths": ["./python_grpc_client"],
   "python.linting.pylintEnabled": false,
   "python.linting.flake8Enabled": true,
   "python.formatting.autopep8Args": [],
-  // K8s
   "vs-kubernetes": {
     "disable-linters": ["resource-limits"]
+  },
+  "[go]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2
+  },
+  "[python]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 4
+  },
+  "[js]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2
+  },
+  "[jsx]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2
+  },
+  "[ts]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2
+  },
+  "[tsx]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2
+  },
+  "[yaml]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.autoIndent": "keep",
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": true
+    }
   }
 }
