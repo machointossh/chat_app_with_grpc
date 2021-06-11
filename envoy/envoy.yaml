@@ -62,7 +62,7 @@ static_resources:
         - endpoint:
             address:
               socket_address:
-                address: grpc_backend
+                address: server 
                 port_value: 9090
     # upstream_connection_options:
     #   tcp_keepalive:
@@ -76,7 +76,7 @@ static_resources:
     #     - endpoint:
     #         address:
     #           socket_address:
-    #             address: grpc_backend
+    #             address: server 
     #             port_value: 9091
 
     # transport_socket:

@@ -9,7 +9,9 @@ import (
 
 	pb "github.com/botamochi-rice/chat_app_with_grpc/server/messenger"
 	"github.com/golang/protobuf/ptypes/empty"
+	"github.com/golang/protobuf/ptypes/timestamp"
 
+	"github.com/golang/protobuf/ptypes"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/health"
 	healthpb "google.golang.org/grpc/health/grpc_health_v1"
@@ -20,25 +22,32 @@ const port = 9090
 
 type Server struct {
 	pb.UnimplementedMessengerServer
-	requests []*pb.MessageRequest
+	responses []*pb.MessageResponse
+}
+
+func sendStreamMessageResponse(s pb.Messenger_FetchMessageServer, m string, ts *timestamp.Timestamp) error {
+	log.Printf("Sent: %v (%v)", m, ts)
+	return s.Send(&pb.MessageResponse{
+		Message:   m,
+		Timestamp: ts,
+	})
 }
 
 func (s *Server) FetchMessage(_ *empty.Empty, stream pb.Messenger_FetchMessageServer) error {
 	log.Println("FetchMessage")
-	for _, r := range s.requests {
-		if err := stream.Send(&pb.MessageResponse{Message: r.GetMessage()}); err != nil {
+	for _, r := range s.responses {
+		if err := sendStreamMessageResponse(stream, r.GetMessage(), r.GetTimestamp()); err != nil {
 			return err
 		}
 	}
 
-	previousCount := len(s.requests)
+	previousCount := len(s.responses)
 
 	for {
-		currentCount := len(s.requests)
+		currentCount := len(s.responses)
 		if previousCount < currentCount {
-			r := s.requests[currentCount-1]
-			log.Printf("Sent: %v", r.GetMessage())
-			if err := stream.Send(&pb.MessageResponse{Message: r.GetMessage()}); err != nil {
+			r := s.responses[currentCount-1]
+			if err := sendStreamMessageResponse(stream, r.GetMessage(), r.GetTimestamp()); err != nil {
 				return err
 			}
 		}
@@ -48,11 +57,17 @@ func (s *Server) FetchMessage(_ *empty.Empty, stream pb.Messenger_FetchMessageSe
 
 func (s *Server) PostMessage(ctx context.Context, r *pb.MessageRequest) (*pb.MessageResponse, error) {
 	log.Println("PostMessage")
+
 	m := r.GetMessage()
+	t, err := ptypes.TimestampProto(time.Now())
+	if err != nil {
+		log.Fatalf("Faield to parse time to timestamp: %v\n", err)
+	}
+
 	log.Printf("Received: %s", m)
-	req := &pb.MessageRequest{Message: m + ": " + time.Now().Format("2006-01-02 15:04:05")}
-	s.requests = append(s.requests, req)
-	return &pb.MessageResponse{Message: m}, nil
+	res := &pb.MessageResponse{Message: m, Timestamp: t}
+	s.responses = append(s.responses, res)
+	return res, nil
 }
 
 func main() {
