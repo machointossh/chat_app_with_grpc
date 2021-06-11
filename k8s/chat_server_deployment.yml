@@ -39,7 +39,7 @@ spec:
             - name: envoy
               mountPath: /etc/envoy
         - name: chat-server
-          image: botamochi818/chat_server:1.0.0
+          image: botamochi818/chat_server:1.0.2
           ports:
           - containerPort: 9090
             name: grpc
