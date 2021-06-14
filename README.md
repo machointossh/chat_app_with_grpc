@@ -9,7 +9,7 @@ This simple chat app covers these technologies.
 
 I hope this project will help you to understand how they work.
 
-## How the Chat App Looks Like?
+## What the Chat App Looks Like?
 
 ![chat.png](./docs/image/chat.png)
 
