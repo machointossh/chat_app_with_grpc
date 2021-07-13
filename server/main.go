@@ -7,7 +7,7 @@ import (
 	"net"
 	"time"
 
-	pb "github.com/botamochi-rice/chat_app_with_grpc/server/messenger"
+	pb "github.com/bot6rice/chat_app_with_grpc/server/messenger"
 	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/golang/protobuf/ptypes/timestamp"
 
