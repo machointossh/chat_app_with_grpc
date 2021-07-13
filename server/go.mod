@@ -1,4 +1,4 @@
-module github.com/botamochi-rice/chat_app_with_grpc/server
+module github.com/bot6rice/chat_app_with_grpc/server
 
 go 1.16
 
@@ -8,4 +8,4 @@ require (
 	google.golang.org/protobuf v1.26.0
 )
 
-replace github.com/botamochi-rice/chat_app_with_grpc/server/messenger => ./messenger
+replace github.com/bot6rice/chat_app_with_grpc/server/messenger => ./messenger
